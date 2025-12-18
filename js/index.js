@@ -40,15 +40,30 @@ document.addEventListener("keydown", (event) => {
         }
 	}
 	if (keyName === "ArrowLeft") {
-		x--;
+		if (x > 0) {
+			x--;
+			setSquareColor(x, y);
+		} else {
+            setSquareColor(x,y)
+        }
 		setSquareColor(x, y);
 	}
 	if (keyName === "ArrowDown") {
-		y++;
+		if (y < 9) {
+			y++;
+			setSquareColor(x, y);
+		} else {
+            setSquareColor(x,y)
+        }
 		setSquareColor(x, y);
 	}
 	if (keyName === "ArrowUp") {
-		y--;
+		if (y>0) {
+			y--;
+			setSquareColor(x, y);
+		} else {
+            setSquareColor(x,y)
+        }
 		setSquareColor(x, y);
 	}
 });
