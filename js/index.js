@@ -1,8 +1,21 @@
-function setSquareColor(x, y) {
+let snakeLength = 10;
+let x = 0;
+let y = 0;
+let appleX = 5;
+let appleY = 5;
+//renderApple(appleX, appleY);
+function setSquareColor(x, y, color) {
 	let field = document.getElementById("field-" + x + "-" + y);
-	field.style.backgroundColor = "green";
+	field.style.backgroundColor = color;
 }
 
+function renderSnakeElement(x, y) {
+	setSquareColor(x, y, "green");
+}
+
+function renderApple(x, y) {
+	setSquareColor(x, y, "red");
+}
 const arena = document.getElementById("arena");
 for (i = 0; i < 10; i++) {
 	const tr = document.createElement("tr");
@@ -14,60 +27,78 @@ for (i = 0; i < 10; i++) {
 	}
 	arena.appendChild(tr);
 }
-function sleep(ms) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+// function sleep(ms) {
+// 	return new Promise((resolve) => setTimeout(resolve, ms));
+// }
+
+// async function moving() {
+// 	for (i = 0; i < 10; i++) {
+// 		await sleep(300);
+// 		setSquareColor(i, 0);
+// 	}
+// }
+renderSnakeElement(x, y);
+document.addEventListener("keydown", (event) => {
+	handleUserAction(event);
+});
+function removeSquareColor(x, y) {
+	let field = document.getElementById("field-" + x + "-" + y);
+	field.style.backgroundColor = "black";
+}
+let snakeTail = [[0, 0]];
+
+function handleUserAction(event) {
+	const hasMoved = move(event.key);
+	if (hasMoved) {
+		snakeTail.push([x, y]);
+		if (snakeTail.length > snakeLength) {
+			deleteLastElementFromTail();
+		}
+	}
+	renderMap();
 }
 
-async function moving() {
-	for (i = 0; i < 10; i++) {
-		await sleep(300);
-		setSquareColor(i, 0);
+function renderMap() {
+	for (let i = 0; i < snakeTail.length; i++) {
+		console.log(snakeTail);
+		const currentPoint = snakeTail[i];
+		const x = currentPoint[0];
+		const y = currentPoint[1];
+		renderSnakeElement(x, y);
 	}
 }
-let x = 0;
-let y = 0;
-setSquareColor(x, y);
-document.addEventListener("keydown", (event) => {
-	console.log(x, y);
-	const keyName = event.key;
-	removeSquareColor();
+
+function move(keyName) {
 	if (keyName === "ArrowRight") {
 		if (x < 9) {
 			x++;
-			setSquareColor(x, y);
-		} else {
-            setSquareColor(x,y)
-        }
+			return true;
+		}
 	}
 	if (keyName === "ArrowLeft") {
 		if (x > 0) {
 			x--;
-			setSquareColor(x, y);
-		} else {
-            setSquareColor(x,y)
-        }
-		setSquareColor(x, y);
+			return true;
+		}
 	}
 	if (keyName === "ArrowDown") {
 		if (y < 9) {
 			y++;
-			setSquareColor(x, y);
-		} else {
-            setSquareColor(x,y)
-        }
-		setSquareColor(x, y);
+			return true;
+		}
 	}
 	if (keyName === "ArrowUp") {
-		if (y>0) {
+		if (y > 0) {
 			y--;
-			setSquareColor(x, y);
-		} else {
-            setSquareColor(x,y)
-        }
-		setSquareColor(x, y);
+			return true;
+		}
 	}
-});
-function removeSquareColor() {
-	let field = document.getElementById("field-" + x + "-" + y);
-	field.style.backgroundColor = "black";
+	return false;
+}
+
+function deleteLastElementFromTail() {
+	removeSquareColor(snakeTail[0][0], snakeTail[0][1]);
+	snakeTail.reverse();
+	snakeTail.pop();
+	snakeTail.reverse();
 }
