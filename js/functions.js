@@ -7,34 +7,56 @@ function renderSnakeElement(x, y) {
 	setSquareColor(x, y, "green");
 }
 
-function renderApple(x, y) {
-	setSquareColor(x, y, "red");
+function renderApple(point) {
+	setSquareColor(point[0], point[1], "red");
 }
 function removeSquareColor(x, y) {
 	let field = document.getElementById("field-" + x + "-" + y);
 	field.style.backgroundColor = "black";
 }
 function handleUserAction(event) {
-	const hasMoved = move(event.key);
-	if (hasMoved) {
-		snakeTail.push([x, y]);
+	const currentSnakePoint = snakeTail[snakeTail.length - 1];
+	const newSnakePosition = getNewSnakePosition(
+		event.key,
+		currentSnakePoint[0],
+		currentSnakePoint[1]
+	);
+	let moveAllowed = true;
+	if (
+		hasCollidedWithSnake(
+			snakeTail,
+			newSnakePosition[0],
+			newSnakePosition[1]
+		)
+	) {
+		moveAllowed = false;
+	}
+
+	if (moveAllowed) {
+		console.log(newSnakePosition);
+		snakeTail.push([newSnakePosition[0], newSnakePosition[1]]);
 		if (snakeTail.length > snakeLength) {
 			deleteLastElementFromTail();
 		}
-        if(x==appleX && y==appleY){
-         snakeLength=snakeLength+1
-        }
+		if (hasEatenApple(newSnakePosition, applePoint)) {
+			snakeLength = snakeLength + 1;
+			generateAppleRandomly();
+		}
 	}
 	renderMap();
 }
+
+function hasEatenApple(snakePoint, applePoint) {
+	return snakePoint[0] == applePoint[0] && snakePoint[1] == applePoint[1];
+}
+
 function renderMap() {
 	for (let i = 0; i < snakeTail.length; i++) {
-		console.log(snakeTail);
 		const currentPoint = snakeTail[i];
 		const x = currentPoint[0];
 		const y = currentPoint[1];
-        renderApple(appleX,appleY)
-        renderSnakeElement(x, y);
+		renderApple(applePoint);
+		renderSnakeElement(x, y);
 	}
 }
 
@@ -72,18 +94,19 @@ function deleteLastElementFromTail() {
 	snakeTail.pop();
 	snakeTail.reverse();
 }
-function createArena(){
-const arena = document.getElementById("arena");
-for (i = 0; i < 10; i++) {
-	const tr = document.createElement("tr");
-	for (j = 0; j < 10; j++) {
-		const td = document.createElement("td");
-		const id = "field-" + j + "-" + i;
-		td.setAttribute("id", id);
-		tr.appendChild(td);
+function createArena() {
+	const arena = document.getElementById("arena");
+	for (i = 0; i < 10; i++) {
+		const tr = document.createElement("tr");
+		for (j = 0; j < 10; j++) {
+			const td = document.createElement("td");
+			const id = "field-" + j + "-" + i;
+			td.setAttribute("id", id);
+			tr.appendChild(td);
+		}
+		arena.appendChild(tr);
 	}
-	arena.appendChild(tr);
-}}
+}
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -92,4 +115,49 @@ async function moving() {
 	for (i = 0; i < 10; i++) {
 		await sleep(300);
 		setSquareColor(i, 0);
-	}}
+	}
+}
+
+function pickRandomApplePosition() {
+	const appleX = Math.floor(Math.random() * 10);
+	const appleY = Math.floor(Math.random() * 10);
+
+	return [appleX, appleY];
+}
+
+function generateAppleRandomly() {
+	applePoint = pickRandomApplePosition();
+	renderApple(applePoint);
+}
+function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
+	if (keyName === "ArrowRight") {
+		if (currentSnakeX < 9) {
+			return [currentSnakeX + 1, currentSnakeY];
+		}
+	}
+	if (keyName === "ArrowLeft") {
+		if (currentSnakeX > 0) {
+			return [currentSnakeX - 1, currentSnakeY];
+		}
+	}
+	if (keyName === "ArrowDown") {
+		if (currentSnakeY < 9) {
+			return [currentSnakeX, currentSnakeY + 1];
+		}
+	}
+	if (keyName === "ArrowUp") {
+		if (currentSnakeY > 0) {
+			return [currentSnakeX, currentSnakeY - 1];
+		}
+	}
+	return [currentSnakeX, currentSnakeY];
+}
+
+function hasCollidedWithSnake(snakeTail, currentSnakeX, currentSnakeY) {
+	return snakeTail.find((checkedPoint) => {
+		return (
+			checkedPoint[0] === currentSnakeX &&
+			checkedPoint[1] === currentSnakeY
+		);
+	});
+}
