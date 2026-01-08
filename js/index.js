@@ -10,3 +10,5 @@ renderSnakeElement(x, y);
 document.addEventListener("keydown", (event) => {
 	handleUserAction(event);
 });
+
+moving()

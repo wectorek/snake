@@ -6,10 +6,10 @@ Done
 4. Moving by arrows
 5. Add tail
 6. Random apple placing
+7. Add snake collisions
 
 To do
 
-1. Add snake collisions
 2. Snake automaticly is going forward
 3. Add going through the border
 4. Add game loop

@@ -112,9 +112,9 @@ function sleep(ms) {
 }
 
 async function moving() {
-	for (i = 0; i < 10; i++) {
-		await sleep(300);
-		setSquareColor(i, 0);
+	for (i = 0; i < 100; i++) {
+		await sleep(600);
+		handleUserAction({ key: "ArrowDown" });
 	}
 }
 
