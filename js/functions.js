@@ -14,7 +14,7 @@ function removeSquareColor(x, y) {
 	let field = document.getElementById("field-" + x + "-" + y);
 	field.style.backgroundColor = "black";
 }
-function handleUserAction(direction) {
+function handleMovement(direction) {
 	const currentSnakePoint = snakeTail[snakeTail.length - 1];
 	const newSnakePosition = getNewSnakePosition(
 		direction,
@@ -114,7 +114,7 @@ function sleep(ms) {
 async function startMoving() {
 	while (true) {
 		await sleep(600);
-		handleUserAction(snakeCurrentDirection);
+		handleMovement(snakeCurrentDirection);
 	}
 }
 
