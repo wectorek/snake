@@ -14,13 +14,15 @@ function removeSquareColor(x, y) {
 	let field = document.getElementById("field-" + x + "-" + y);
 	field.style.backgroundColor = "black";
 }
-function handleUserAction(event) {
+function handleUserAction(direction) {
 	const currentSnakePoint = snakeTail[snakeTail.length - 1];
+	console.log(direction);
 	const newSnakePosition = getNewSnakePosition(
-		event.key,
+		direction,
 		currentSnakePoint[0],
 		currentSnakePoint[1]
 	);
+
 	let moveAllowed = true;
 	if (
 		hasCollidedWithSnake(
@@ -111,10 +113,10 @@ function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function moving() {
-	for (i = 0; i < 100; i++) {
+async function startMoving() {
+	while (true) {
 		await sleep(600);
-		handleUserAction({ key: "ArrowDown" });
+		handleUserAction(snakeCurrentDirection);
 	}
 }
 
@@ -151,6 +153,37 @@ function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 		}
 	}
 	return [currentSnakeX, currentSnakeY];
+}
+
+function getSnakeDirection(keyName) {
+	if (keyName === directions.right) {
+		if (snakeCurrentDirection === directions.right) {
+			return (snakeCurrentDirection = directions.down);
+		}
+		if (snakeCurrentDirection === directions.down) {
+			return (snakeCurrentDirection = directions.left);
+		}
+		if (snakeCurrentDirection === directions.left) {
+			return (snakeCurrentDirection = directions.up);
+		}
+		if (snakeCurrentDirection === directions.up) {
+			return (snakeCurrentDirection = directions.right);
+		}
+	}
+	if (keyName === directions.left) {
+		if (snakeCurrentDirection === directions.right) {
+			return (snakeCurrentDirection = directions.up);
+		}
+		if (snakeCurrentDirection === directions.up) {
+			return (snakeCurrentDirection = directions.left);
+		}
+		if (snakeCurrentDirection === directions.left) {
+			return (snakeCurrentDirection = directions.down);
+		}
+		if (snakeCurrentDirection === directions.down) {
+			return (snakeCurrentDirection = directions.right);
+		}
+	}
 }
 
 function hasCollidedWithSnake(snakeTail, currentSnakeX, currentSnakeY) {

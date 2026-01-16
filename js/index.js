@@ -4,11 +4,20 @@ let x = 0;
 let y = 0;
 let applePoint = pickRandomApplePosition()
 
+const directions = {
+	right: "ArrowRight",
+	left: "ArrowLeft",
+	down: "ArrowDown",
+	up: "ArrowUp"
+}
+
+let snakeCurrentDirection = directions.right
+
 createArena();
 generateAppleRandomly()
 renderSnakeElement(x, y);
 document.addEventListener("keydown", (event) => {
-	handleUserAction(event);
+	snakeCurrentDirection = getSnakeDirection(event.key)
 });
 
-moving()
+startMoving()
