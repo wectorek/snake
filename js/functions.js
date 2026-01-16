@@ -16,7 +16,6 @@ function removeSquareColor(x, y) {
 }
 function handleUserAction(direction) {
 	const currentSnakePoint = snakeTail[snakeTail.length - 1];
-	console.log(direction);
 	const newSnakePosition = getNewSnakePosition(
 		direction,
 		currentSnakePoint[0],
@@ -35,7 +34,6 @@ function handleUserAction(direction) {
 	}
 
 	if (moveAllowed) {
-		console.log(newSnakePosition);
 		snakeTail.push([newSnakePosition[0], newSnakePosition[1]]);
 		if (snakeTail.length > snakeLength) {
 			deleteLastElementFromTail();
