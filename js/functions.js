@@ -1,14 +1,15 @@
-function setSquareColor(x, y, color) {
+function setSquareColor(x, y, color, className) {
 	let field = document.getElementById("field-" + x + "-" + y);
 	field.style.backgroundColor = color;
+	field.className = className;
 }
 
 function renderSnakeElement(x, y) {
-	setSquareColor(x, y, "green");
+	setSquareColor(x, y, "green", "");
 }
 
 function renderApple(point) {
-	setSquareColor(point[0], point[1], "red");
+	setSquareColor(point[0], point[1], "red", "apple");
 }
 function removeSquareColor(x, y) {
 	let field = document.getElementById("field-" + x + "-" + y);
@@ -41,6 +42,7 @@ function handleMovement(direction) {
 		if (hasEatenApple(newSnakePosition, applePoint)) {
 			snakeLength = snakeLength + 1;
 			generateAppleRandomly();
+			speed -=50;
 		}
 	}
 	renderMap();
@@ -62,7 +64,7 @@ function renderMap() {
 
 function move(keyName) {
 	if (keyName === "ArrowRight") {
-		if (x < 9) {
+		if (x < 29) {
 			x++;
 			return true;
 		}
@@ -74,7 +76,7 @@ function move(keyName) {
 		}
 	}
 	if (keyName === "ArrowDown") {
-		if (y < 9) {
+		if (y < 29) {
 			y++;
 			return true;
 		}
@@ -96,9 +98,9 @@ function deleteLastElementFromTail() {
 }
 function createArena() {
 	const arena = document.getElementById("arena");
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < 30; i++) {
 		const tr = document.createElement("tr");
-		for (j = 0; j < 10; j++) {
+		for (j = 0; j < 30; j++) {
 			const td = document.createElement("td");
 			const id = "field-" + j + "-" + i;
 			td.setAttribute("id", id);
@@ -113,7 +115,7 @@ function sleep(ms) {
 
 async function startMoving() {
 	while (true) {
-		await sleep(600);
+		await sleep(speed);
 		handleMovement(snakeCurrentDirection);
 	}
 }
@@ -131,7 +133,7 @@ function generateAppleRandomly() {
 }
 function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 	if (keyName === "ArrowRight") {
-		if (currentSnakeX < 9) {
+		if (currentSnakeX < 29) {
 			return [currentSnakeX + 1, currentSnakeY];
 		}
 	}
@@ -141,7 +143,7 @@ function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 		}
 	}
 	if (keyName === "ArrowDown") {
-		if (currentSnakeY < 9) {
+		if (currentSnakeY < 29) {
 			return [currentSnakeX, currentSnakeY + 1];
 		}
 	}

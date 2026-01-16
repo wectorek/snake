@@ -3,6 +3,7 @@ let snakeLength = 2;
 let x = 0;
 let y = 0;
 let applePoint = pickRandomApplePosition()
+let speed = 500;
 
 const directions = {
 	right: "ArrowRight",
