@@ -19,3 +19,9 @@ To do
 Ideas
 
 1. Create lists with x and y of apples
+
+homework
+- infinite map
+- chessboard map
+- parametrize map size
+- rainbow snake! each snake element has different color
