@@ -4,7 +4,6 @@ let x = 0;
 let y = 0;
 let applePoint = pickRandomApplePosition()
 let speed = 500;
-let mapSize = 30
 
 const directions = {
 	right: "ArrowRight",
