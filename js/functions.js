@@ -64,7 +64,7 @@ function renderMap() {
 
 function move(keyName) {
 	if (keyName === "ArrowRight") {
-		if (x < 29) {
+		if (x < mapSize-1) {
 			x++;
 			return true;
 		}
@@ -76,7 +76,7 @@ function move(keyName) {
 		}
 	}
 	if (keyName === "ArrowDown") {
-		if (y < 29) {
+		if (y < mapSize-1) {
 			y++;
 			return true;
 		}
@@ -98,9 +98,9 @@ function deleteLastElementFromTail() {
 }
 function createArena() {
 	const arena = document.getElementById("arena");
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < mapSize; i++) {
 		const tr = document.createElement("tr");
-		for (j = 0; j < 30; j++) {
+		for (j = 0; j < mapSize; j++) {
 			const td = document.createElement("td");
 			const id = "field-" + j + "-" + i;
 			td.setAttribute("id", id);
@@ -121,8 +121,8 @@ async function startMoving() {
 }
 
 function pickRandomApplePosition() {
-	const appleX = Math.floor(Math.random() * 10);
-	const appleY = Math.floor(Math.random() * 10);
+	const appleX = Math.floor(Math.random() * mapSize);
+	const appleY = Math.floor(Math.random() * mapSize);
 
 	return [appleX, appleY];
 }
@@ -133,7 +133,7 @@ function generateAppleRandomly() {
 }
 function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 	if (keyName === "ArrowRight") {
-		if (currentSnakeX < 29) {
+		if (currentSnakeX < mapSize-1) {
 			return [currentSnakeX + 1, currentSnakeY];
 		}
 	}
@@ -143,7 +143,7 @@ function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 		}
 	}
 	if (keyName === "ArrowDown") {
-		if (currentSnakeY < 29) {
+		if (currentSnakeY < mapSize-1) {
 			return [currentSnakeX, currentSnakeY + 1];
 		}
 	}
@@ -194,3 +194,4 @@ function hasCollidedWithSnake(snakeTail, currentSnakeX, currentSnakeY) {
 		);
 	});
 }
+
