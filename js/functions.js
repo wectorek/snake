@@ -194,3 +194,4 @@ function hasCollidedWithSnake(snakeTail, currentSnakeX, currentSnakeY) {
 		);
 	});
 }
+
