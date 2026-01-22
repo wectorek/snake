@@ -20,7 +20,7 @@ function handleMovement(direction) {
 	const newSnakePosition = getNewSnakePosition(
 		direction,
 		currentSnakePoint[0],
-		currentSnakePoint[1]
+		currentSnakePoint[1],
 	);
 
 	let moveAllowed = true;
@@ -28,7 +28,7 @@ function handleMovement(direction) {
 		hasCollidedWithSnake(
 			snakeTail,
 			newSnakePosition[0],
-			newSnakePosition[1]
+			newSnakePosition[1],
 		)
 	) {
 		moveAllowed = false;
@@ -42,7 +42,7 @@ function handleMovement(direction) {
 		if (hasEatenApple(newSnakePosition, applePoint)) {
 			snakeLength = snakeLength + 1;
 			generateAppleRandomly();
-			speed -=50;
+			speed -= 50;
 		}
 	}
 	renderMap();
@@ -64,7 +64,7 @@ function renderMap() {
 
 function move(keyName) {
 	if (keyName === "ArrowRight") {
-		if (x < mapSize-1) {
+		if (x < mapSize - 1) {
 			x++;
 			return true;
 		}
@@ -76,7 +76,7 @@ function move(keyName) {
 		}
 	}
 	if (keyName === "ArrowDown") {
-		if (y < mapSize-1) {
+		if (y < mapSize - 1) {
 			y++;
 			return true;
 		}
@@ -133,26 +133,33 @@ function generateAppleRandomly() {
 }
 function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 	if (keyName === "ArrowRight") {
-		if (currentSnakeX < mapSize-1) {
+		if (currentSnakeX < mapSize - 1) {
 			return [currentSnakeX + 1, currentSnakeY];
+		} else {
+			return [0, currentSnakeY];
 		}
 	}
 	if (keyName === "ArrowLeft") {
 		if (currentSnakeX > 0) {
 			return [currentSnakeX - 1, currentSnakeY];
+		} else {
+			return [mapSize, currentSnakeY];
 		}
 	}
 	if (keyName === "ArrowDown") {
-		if (currentSnakeY < mapSize-1) {
+		if (currentSnakeY < mapSize - 1) {
 			return [currentSnakeX, currentSnakeY + 1];
+		} else {
+			return [currentSnakeX, mapSize];
 		}
 	}
 	if (keyName === "ArrowUp") {
 		if (currentSnakeY > 0) {
 			return [currentSnakeX, currentSnakeY - 1];
+		} else {
+			return [currentSnakeX, 0];
 		}
 	}
-	return [currentSnakeX, currentSnakeY];
 }
 
 function getSnakeDirection(keyName) {
@@ -194,4 +201,3 @@ function hasCollidedWithSnake(snakeTail, currentSnakeX, currentSnakeY) {
 		);
 	});
 }
-
