@@ -143,21 +143,21 @@ function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
 		if (currentSnakeX > 0) {
 			return [currentSnakeX - 1, currentSnakeY];
 		} else {
-			return [mapSize, currentSnakeY];
+			return [mapSize-1, currentSnakeY];
 		}
 	}
 	if (keyName === "ArrowDown") {
 		if (currentSnakeY < mapSize - 1) {
 			return [currentSnakeX, currentSnakeY + 1];
 		} else {
-			return [currentSnakeX, mapSize];
+			return [currentSnakeX, 0];
 		}
 	}
 	if (keyName === "ArrowUp") {
 		if (currentSnakeY > 0) {
 			return [currentSnakeX, currentSnakeY - 1];
 		} else {
-			return [currentSnakeX, 0];
+			return [currentSnakeX, mapSize-1];
 		}
 	}
 }
