@@ -131,35 +131,26 @@ function generateAppleRandomly() {
 	applePoint = pickRandomApplePosition();
 	renderApple(applePoint);
 }
-function getNewSnakePosition(keyName, currentSnakeX, currentSnakeY) {
-	if (keyName === "ArrowRight") {
-		if (currentSnakeX < mapSize - 1) {
-			return [currentSnakeX + 1, currentSnakeY];
-		} else {
-			return [0, currentSnakeY];
-		}
+function getNewSnakePosition(direction, currentSnakeX, currentSnakeY) {
+	let newX = currentSnakeX;
+	let newY = currentSnakeY;
+	switch (direction) {
+		case directions.right:
+			currentSnakeX < mapSize - 1 ? (newX += 1) : (newX = 0);
+			break;
+		case directions.left:
+			currentSnakeX > 0 ? (newX -= 1) : (newX = mapSize - 1);
+			break;
+
+		case directions.down:
+			currentSnakeY < mapSize - 1 ? (newY += 1) : (newY = 0);
+			break;
+
+		case directions.up:
+			currentSnakeY > 0 ? (newY -= 1) : (newY = mapSize - 1);
+			break;
 	}
-	if (keyName === "ArrowLeft") {
-		if (currentSnakeX > 0) {
-			return [currentSnakeX - 1, currentSnakeY];
-		} else {
-			return [mapSize, currentSnakeY];
-		}
-	}
-	if (keyName === "ArrowDown") {
-		if (currentSnakeY < mapSize - 1) {
-			return [currentSnakeX, currentSnakeY + 1];
-		} else {
-			return [currentSnakeX, mapSize];
-		}
-	}
-	if (keyName === "ArrowUp") {
-		if (currentSnakeY > 0) {
-			return [currentSnakeX, currentSnakeY - 1];
-		} else {
-			return [currentSnakeX, 0];
-		}
-	}
+	return [newX, newY];
 }
 
 function getSnakeDirection(keyName) {

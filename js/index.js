@@ -2,7 +2,7 @@ let snakeTail = [[0, 0]];
 let snakeLength = 2;
 let x = 0;
 let y = 0;
-let mapSize = 30
+let mapSize = 10
 let applePoint = pickRandomApplePosition()
 let speed = 500;
 
