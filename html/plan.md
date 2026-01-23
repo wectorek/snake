@@ -23,3 +23,4 @@ Ideas
 homework
 - chessboard map
 - rainbow snake! each snake element has different color
+- Lose when player touch himself

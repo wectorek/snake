@@ -5,7 +5,7 @@ function setSquareColor(x, y, color, className) {
 }
 
 function renderSnakeElement(x, y) {
-	setSquareColor(x, y, "green", "");
+	setSquareColor(x, y, "blue", "");
 }
 
 function renderApple(point) {
@@ -53,12 +53,10 @@ function hasEatenApple(snakePoint, applePoint) {
 }
 
 function renderMap() {
-	for (let i = 0; i < snakeTail.length; i++) {
-		const currentPoint = snakeTail[i];
-		const x = currentPoint[0];
-		const y = currentPoint[1];
-		renderApple(applePoint);
-		renderSnakeElement(x, y);
+	colorArena();
+	renderApple(applePoint);
+	for (snakeElement of snakeTail) {
+		renderSnakeElement(snakeElement[0], snakeElement[1]);
 	}
 }
 
@@ -109,6 +107,28 @@ function createArena() {
 		arena.appendChild(tr);
 	}
 }
+function colorArena() {
+	for (let y = 0; y < mapSize; y++) {
+		for (let x = 0; x < mapSize; x++) {
+			if (y % 2 === 0) {
+				if (x % 2 !== 0) {
+					setSquareColor(x, y, "darkgreen", "");
+				} else {
+					setSquareColor(x, y, "green", "");
+				}
+			} else {
+				if (x % 2 !== 0) {
+					setSquareColor(x, y, "green", "");
+				
+				} else {
+					setSquareColor(x, y, "darkgreen", "");
+
+				}
+			}
+		}
+	}
+}
+
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }

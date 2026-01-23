@@ -17,7 +17,9 @@ const directions = {
 let snakeCurrentDirection = directions.right
 
 createArena();
+colorArena()
 generateAppleRandomly()
+console.log(x, y)
 renderSnakeElement(x, y);
 document.addEventListener("keydown", (event) => {
 	snakeCurrentDirection = getSnakeDirection(event.key)
