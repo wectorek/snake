@@ -5,7 +5,7 @@ function setSquareColor(x, y, color, className) {
 }
 
 function renderSnakeElement(x, y) {
-	setSquareColor(x, y, "blue", "");
+	setSquareColor(x, y, snakeColor, "");
 }
 
 function renderApple(point) {
@@ -15,6 +15,13 @@ function removeSquareColor(x, y) {
 	let field = document.getElementById("field-" + x + "-" + y);
 	field.style.backgroundColor = "black";
 }
+
+function pickRandomColor(){
+	const colorNumber = Math.floor(Math.random() * colors.length);
+	const color=colors[colorNumber]
+	return color
+}
+
 function handleMovement(direction) {
 	const currentSnakePoint = snakeTail[snakeTail.length - 1];
 	const newSnakePosition = getNewSnakePosition(
@@ -43,6 +50,7 @@ function handleMovement(direction) {
 			snakeLength = snakeLength + 1;
 			generateAppleRandomly();
 			speed -= 50;
+			snakeColor=pickRandomColor()
 		}
 	}
 	renderMap();
@@ -141,8 +149,8 @@ async function startMoving() {
 }
 
 function pickRandomApplePosition() {
-	const appleX = Math.floor(Math.random() * mapSize);
-	const appleY = Math.floor(Math.random() * mapSize);
+	const appleX = Math.floor(Math.random() * mapSize-1);
+	const appleY = Math.floor(Math.random() * mapSize-1);
 
 	return [appleX, appleY];
 }

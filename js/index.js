@@ -5,7 +5,8 @@ let y = 0;
 let mapSize = 10
 let applePoint = pickRandomApplePosition()
 let speed = 500;
-
+let snakeColor = "blue"
+const colors = ["blue","red","pink","purple","orange","yellow"]
 
 const directions = {
 	right: "ArrowRight",

@@ -21,6 +21,4 @@ Ideas
 1. Create lists with x and y of apples
 
 homework
-- chessboard map
-- rainbow snake! each snake element has different color
 - Lose when player touch himself
