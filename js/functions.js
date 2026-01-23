@@ -49,7 +49,7 @@ function handleMovement(direction) {
 		if (hasEatenApple(newSnakePosition, applePoint)) {
 			snakeLength = snakeLength + 1;
 			generateAppleRandomly();
-			speed -= 50;
+			speed -= 25;
 			snakeColor=pickRandomColor()
 		}
 	}
