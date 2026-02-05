@@ -16,10 +16,10 @@ function removeSquareColor(x, y) {
 	field.style.backgroundColor = "black";
 }
 
-function pickRandomColor(){
+function pickRandomColor() {
 	const colorNumber = Math.floor(Math.random() * colors.length);
-	const color=colors[colorNumber]
-	return color
+	const color = colors[colorNumber];
+	return color;
 }
 
 function handleMovement(direction) {
@@ -39,6 +39,10 @@ function handleMovement(direction) {
 		)
 	) {
 		moveAllowed = false;
+		snakeTail = [[0, 0]];
+		speed = 500;
+		snakeLength = 2;
+		snakeCurrentDirection = directions.right;
 	}
 
 	if (moveAllowed) {
@@ -50,7 +54,7 @@ function handleMovement(direction) {
 			snakeLength = snakeLength + 1;
 			generateAppleRandomly();
 			speed -= 25;
-			snakeColor=pickRandomColor()
+			snakeColor = pickRandomColor();
 		}
 	}
 	renderMap();
@@ -127,10 +131,8 @@ function colorArena() {
 			} else {
 				if (x % 2 !== 0) {
 					setSquareColor(x, y, "green", "");
-				
 				} else {
 					setSquareColor(x, y, "darkgreen", "");
-
 				}
 			}
 		}
@@ -149,8 +151,8 @@ async function startMoving() {
 }
 
 function pickRandomApplePosition() {
-	const appleX = Math.floor(Math.random() * mapSize-1);
-	const appleY = Math.floor(Math.random() * mapSize-1);
+	const appleX = Math.floor(Math.random() * (mapSize - 1));
+	const appleY = Math.floor(Math.random() * (mapSize - 1));
 
 	return [appleX, appleY];
 }
